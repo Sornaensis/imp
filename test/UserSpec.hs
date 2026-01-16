@@ -18,10 +18,10 @@ import Test.Hspec.QuickCheck (prop)
 
 import Imp.CodegenGolden (renderDecSummary)
 
-import UserCaps (HasAuditLog(..), HasClock(..), HasSessionStore(..), HasUserOps(..), HasUserStore(..), createSession, createUser, deleteUser, requireAuditLog, requireClock, requireSessionStore, requireUserOps, requireUserStore, updatePreferences, updateProfile)
-import UserLogic (defaultUser, sampleUser)
-import qualified UserModel
-import UserRuntime
+import UserSpec.UserCaps (HasAuditLog(..), HasClock(..), HasSessionStore(..), HasUserOps(..), HasUserStore(..), createSession, createUser, deleteUser, requireAuditLog, requireClock, requireSessionStore, requireUserOps, requireUserStore, updatePreferences, updateProfile)
+import UserSpec.UserLogic (defaultUser, sampleUser)
+import qualified UserSpec.UserModel as UserModel
+import UserSpec.UserRuntime
 
 newtype TestM a = TestM { runTestM :: State TestEnv a }
   deriving (Functor, Applicative, Monad)

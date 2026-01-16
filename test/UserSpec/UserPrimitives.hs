@@ -1,4 +1,4 @@
-module UserPrimitives
+module UserSpec.UserPrimitives
   ( Email(..)
   , emailValue
   , Phone(..)

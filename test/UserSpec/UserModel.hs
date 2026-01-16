@@ -1,6 +1,6 @@
 {-# LANGUAGE StandaloneDeriving #-}
 
-module UserModel
+module UserSpec.UserModel
   ( UserId(..)
   , SessionId(..)
   , Email(..)
@@ -45,7 +45,7 @@ module UserModel
   ) where
 
 import Imp.DSL
-import qualified UserOperators
+import qualified UserSpec.UserOperators as UserOperators
 
 [impModule|
   newtype UserId = int deriving (Eq);

@@ -1,4 +1,4 @@
-module UserLogic
+module UserSpec.UserLogic
   ( defaultProfile
   , defaultUser
   , setDisplayName
@@ -7,8 +7,8 @@ module UserLogic
   ) where
 
 import Imp.DSL
-import UserModel (AccountStatus(..), Email(..), Profile(..), User(..), UserId(..), address, email, phone)
-import qualified UserModel
+import UserSpec.UserModel (AccountStatus(..), Email(..), Profile(..), User(..), UserId(..), address, email, phone)
+import qualified UserSpec.UserModel as UserModel
 
 [impModule|
   fn defaultProfile(emailVal: Email): Profile {

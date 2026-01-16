@@ -85,13 +85,13 @@ test-suite imp-test
       Imp.ParserSpec
       Imp.RuntimeSpec
       Imp.ValidateSpec
-      UserCaps
-      UserLogic
-      UserModel
-      UserOperators
-      UserPrimitives
-      UserRuntime
       UserSpec
+      UserSpec.UserCaps
+      UserSpec.UserLogic
+      UserSpec.UserModel
+      UserSpec.UserOperators
+      UserSpec.UserPrimitives
+      UserSpec.UserRuntime
       Paths_imp
   hs-source-dirs:
       test

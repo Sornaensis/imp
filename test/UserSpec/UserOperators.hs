@@ -1,4 +1,4 @@
-module UserOperators
+module UserSpec.UserOperators
   ( emailAppend
   ) where
 

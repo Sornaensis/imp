@@ -1,4 +1,4 @@
-module UserCaps
+module UserSpec.UserCaps
   ( HasUserStore(..)
   , HasSessionStore(..)
   , HasAuditLog(..)
@@ -19,9 +19,9 @@ module UserCaps
 import Data.Maybe (fromJust, isJust)
 
 import Imp.DSL
-import UserLogic (defaultUser, renameProfile)
-import UserModel (AuditEvent(..), Email(..), NotificationChannel(..), Preferences(..), Session(..), SessionId(..), User(..), UserId(..), prefs, profile, sessions, status, userId)
-import qualified UserModel
+import UserSpec.UserLogic (defaultUser, renameProfile)
+import UserSpec.UserModel (AuditEvent(..), Email(..), NotificationChannel(..), Preferences(..), Session(..), SessionId(..), User(..), UserId(..), prefs, profile, sessions, status, userId)
+import qualified UserSpec.UserModel as UserModel
 
 [impModule|
   capability UserStore {
