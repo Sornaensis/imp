@@ -1,0 +1,8 @@
+class HasUserStore m { cap_userStore_getUser :: UserId -> m Maybe User, cap_userStore_putUser :: User -> m (), cap_userStore_deleteUser :: UserId -> m (), cap_userStore_listUsers :: m [] User }
+sig requireUserStore :: forall m. (Applicative m, HasUserStore m) => m ()
+class HasSessionStore m { cap_sessionStore_getSession :: SessionId -> m Maybe Session, cap_sessionStore_putSession :: Session -> m (), cap_sessionStore_deleteSession :: SessionId -> m (), cap_sessionStore_listSessions :: m [] Session }
+sig requireSessionStore :: forall m. (Applicative m, HasSessionStore m) => m ()
+class HasAuditLog m { cap_auditLog_appendEvent :: AuditEvent -> m () }
+sig requireAuditLog :: forall m. (Applicative m, HasAuditLog m) => m ()
+class HasClock m { cap_clock_now :: m Int64 }
+sig requireClock :: forall m. (Applicative m, HasClock m) => m ()

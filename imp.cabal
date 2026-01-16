@@ -1,0 +1,144 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.38.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           imp
+version:        0.1.0.0
+synopsis:       Quasiquoter-driven calculation DSL skeleton
+description:    A small Stack project demonstrating how to expose a calculation pipeline DSL
+                via quasiquoters, with library, executable, tests, and benchmarks ready to extend.
+category:       DSL
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+
+library
+  exposed-modules:
+      Imp.DSL
+      Imp.AST
+      Imp.Parser
+      Imp.Codegen
+      Imp.Runtime
+      Imp.Validate
+  other-modules:
+      Paths_imp
+  hs-source-dirs:
+      src
+  default-extensions:
+      TemplateHaskell
+      QuasiQuotes
+      OverloadedStrings
+      DeriveLift
+      LambdaCase
+      DeriveFunctor
+      DeriveFoldable
+      DeriveTraversable
+      RankNTypes
+  ghc-options: -Wall
+  build-depends:
+      base >=4.17 && <5
+    , bytestring
+    , containers
+    , haskell-src-meta
+    , lens
+    , megaparsec
+    , mtl
+    , template-haskell
+    , text
+    , uuid-types
+  default-language: Haskell2010
+
+executable imp-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_imp
+  hs-source-dirs:
+      app
+  default-extensions:
+      TemplateHaskell
+      QuasiQuotes
+      OverloadedStrings
+      DeriveLift
+      LambdaCase
+      DeriveFunctor
+      DeriveFoldable
+      DeriveTraversable
+      RankNTypes
+  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base
+    , imp
+    , mtl
+    , text
+  default-language: Haskell2010
+
+test-suite imp-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Imp.ASTSpec
+      Imp.CodegenGolden
+      Imp.CodegenSpec
+      Imp.DSLSpec
+      Imp.ParserSpec
+      Imp.RuntimeSpec
+      Imp.ValidateSpec
+      UserCaps
+      UserLogic
+      UserModel
+      UserOperators
+      UserPrimitives
+      UserRuntime
+      UserSpec
+      Paths_imp
+  hs-source-dirs:
+      test
+  default-extensions:
+      TemplateHaskell
+      QuasiQuotes
+      OverloadedStrings
+      DeriveLift
+      LambdaCase
+      DeriveFunctor
+      DeriveFoldable
+      DeriveTraversable
+      RankNTypes
+  ghc-options: -Wall
+  build-depends:
+      QuickCheck
+    , base
+    , containers
+    , hspec
+    , imp
+    , lens
+    , megaparsec
+    , mtl
+    , template-haskell
+    , text
+  default-language: Haskell2010
+
+benchmark imp-bench
+  type: exitcode-stdio-1.0
+  main-is: Bench.hs
+  other-modules:
+      Paths_imp
+  hs-source-dirs:
+      bench
+  default-extensions:
+      TemplateHaskell
+      QuasiQuotes
+      OverloadedStrings
+      DeriveLift
+      LambdaCase
+      DeriveFunctor
+      DeriveFoldable
+      DeriveTraversable
+      RankNTypes
+  ghc-options: -Wall -O2 -threaded
+  build-depends:
+      base
+    , criterion
+    , imp
+  default-language: Haskell2010

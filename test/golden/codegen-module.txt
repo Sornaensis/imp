@@ -1,0 +1,5 @@
+data Counter { _CounterValue :: Int32 }
+sig value :: Lens' Counter Int32
+class HasLogging m { cap_logging_log :: Text -> m () }
+sig requireLogging :: forall m. (Applicative m, HasLogging m) => m ()
+sig add :: Int32 -> Int32 -> Int32

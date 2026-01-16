@@ -1,0 +1,84 @@
+name: imp
+version: 0.1.0.0
+license: MIT
+license-file: LICENSE
+build-type: Simple
+extra-source-files: []
+synopsis: Quasiquoter-driven calculation DSL skeleton
+category: DSL
+maintainer: ""
+description: |
+  A small Stack project demonstrating how to expose a calculation pipeline DSL
+  via quasiquoters, with library, executable, tests, and benchmarks ready to extend.
+
+ghc-options: -Wall
+default-extensions:
+  - TemplateHaskell
+  - QuasiQuotes
+  - OverloadedStrings
+  - DeriveLift
+  - LambdaCase
+  - DeriveFunctor
+  - DeriveFoldable
+  - DeriveTraversable
+  - RankNTypes
+
+language: Haskell2010
+
+library:
+  source-dirs: src
+  exposed-modules:
+    - Imp.DSL
+    - Imp.AST
+    - Imp.Parser
+    - Imp.Codegen
+    - Imp.Runtime
+    - Imp.Validate
+  dependencies:
+    - base >= 4.17 && < 5
+    - text
+    - megaparsec
+    - lens
+    - template-haskell
+    - mtl
+    - bytestring
+    - uuid-types
+    - containers
+    - haskell-src-meta
+
+executables:
+  imp-exe:
+    main: Main.hs
+    source-dirs: app
+    ghc-options: -threaded -rtsopts -with-rtsopts=-N
+    dependencies:
+      - base
+      - text
+      - mtl
+      - imp
+
+tests:
+  imp-test:
+    main: Spec.hs
+    source-dirs: test
+    dependencies:
+      - base
+      - imp
+      - hspec
+      - QuickCheck
+      - text
+      - mtl
+      - lens
+      - megaparsec
+      - template-haskell
+      - containers
+
+benchmarks:
+  imp-bench:
+    main: Bench.hs
+    source-dirs: bench
+    ghc-options: -O2 -threaded
+    dependencies:
+      - base
+      - imp
+      - criterion
