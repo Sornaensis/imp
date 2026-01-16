@@ -35,6 +35,26 @@ This DSL describes an imperative core that elaborates to Haskell declarations an
 - **Return** exits a procedure early with a value.
 - **Await** executes an action in the current monad (only allowed in `proc`).
 
+## Record updating
+
+Records are immutable values. Updating a record expression creates a new record value with selected fields replaced.
+
+- The update syntax mirrors Haskell record updates: `expr { field = value, ... }`.
+- You can update nested records by first producing an updated inner value, then updating the outer record.
+- Updates are pure expressions (they do not mutate refs). To update a ref holding a record, assign the updated record.
+
+Example:
+
+```haskell
+[imp|  
+	let user1 = new User(uid, "Ada", null);
+	let user2 = user1 { userName = "Ada Lovelace" };
+
+	// update a ref holding a record
+	this.user = this.user { userEmail = email#"ada@lovelace.org" };
+|]
+```
+
 ## Functions vs procedures
 
 - **`fn`** defines a *pure* function. Its body contains only pure statements and expressions. It elaborates to a Haskell function in `Identity`.
@@ -133,5 +153,17 @@ This DSL describes an imperative core that elaborates to Haskell declarations an
 	fn makeUser(uid: UserId, name: Text): User {
 		return new User(uid, name, null);
 	}
+|]
+```
+
+### Capability-required snippet
+
+```haskell
+[imp|
+	capabilities(Logging);
+
+	await capabilities.Logging.log("starting");
+	var msg = "hello";
+	await capabilities.Logging.log(msg);
 |]
 ```
