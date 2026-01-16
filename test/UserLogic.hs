@@ -21,11 +21,11 @@ import qualified UserModel
     return new User(uid, Active, profileVal, prefs, hs{ [] });
   }
 
-  fn setDisplayName(profileVal: Profile, name: text): Profile {
+  fn setDisplayName(profileVal: Profile, name: Text): Profile {
     return new Profile(hs{ Just name }, profileVal.email, profileVal.phone, profileVal.address);
   }
 
-  fn renameProfile(profileVal: Profile, name: text): Profile {
+  fn renameProfile(profileVal: Profile, name: Text): Profile {
     return profileVal.setDisplayName(name);
   }
 

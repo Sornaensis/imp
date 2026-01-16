@@ -79,7 +79,7 @@ reserved =
   , "new", "null", "true", "false"
   , "deriving"
   -- primitive types
-  , "bool", "char", "string", "text", "byte", "short", "int", "long"
+  , "bool", "char", "string", "Text", "byte", "short", "int", "long"
   , "float", "double", "bytes", "unit", "void", "uuid"
   , "option", "list", "map"
   , "Unit", "Void", "Option", "List", "Map"
@@ -186,7 +186,7 @@ pPrimType = TPrim <$> choice
   [ PBool   <$ symbol "bool"
   , PChar   <$ symbol "char"
   , PString <$ symbol "string"
-  , PText   <$ symbol "text"
+  , PText   <$ symbol "Text"
   , PByte   <$ symbol "byte"
   , PShort  <$ symbol "short"
   , PInt    <$ symbol "int"

@@ -52,22 +52,22 @@ import qualified UserOperators
   newtype SessionId = int deriving (Eq);
 
   type Email {
-    emailValue: text;
+    emailValue: Text;
   }
 
   type Phone {
-    phoneValue: text;
+    phoneValue: Text;
   }
 
   type Address {
-    line1: text;
-    line2: Option<text>;
-    city: text;
-    country: text;
+    line1: Text;
+    line2: Option<Text>;
+    city: Text;
+    country: Text;
   }
 
   type Profile {
-    displayName: Option<text>;
+    displayName: Option<Text>;
     email: Email;
     phone: Option<Phone>;
     address: Option<Address>;
@@ -77,7 +77,7 @@ import qualified UserOperators
   enum NotificationChannel { EmailChannel, SMSChannel, PushChannel }
 
   type Preferences {
-    theme: text;
+    theme: Text;
     notifications: List<NotificationChannel>;
   }
 
@@ -101,10 +101,10 @@ import qualified UserOperators
   }
 
   type AuditEvent {
-    action: text;
+    action: Text;
     eventUserId: Option<UserId>;
     at: long;
-    details: text;
+    details: Text;
   }
 
   operators {

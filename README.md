@@ -11,7 +11,7 @@ This DSL describes an imperative core that elaborates to Haskell declarations an
 
 ## Types
 
-- **Primitive types**: `Bool`, `Int`, `Float`, `String`.
+- **Primitive types**: `Bool`, `Int`, `Float`, `String`, `Text`.
 - **Algebraic types**: `data` and `newtype` create tagged sum and product types with constructors.
 - **Records**: record fields are named; lenses are generated for field access in the runtime layer.
 - **Type constructors**: `Option a`, `List a`, `Map k v`.
@@ -71,26 +71,26 @@ This DSL describes an imperative core that elaborates to Haskell declarations an
 
 	type User {
 		userId: UserId;
-		userName: text;
-		userEmail: Option<text>;
+		userName: Text;
+		userEmail: Option<Text>;
 	}
 
 	enum Status { Active, Disabled }
 
 	capability Logging {
-		log(msg: text): Unit;
+		log(msg: Text): Unit;
 	}
 
 	operators {
 		(++) = stringAppend;
 	}
 
-	fn greeting(name: text): text {
+	fn greeting(name: Text): Text {
 		let msg = "hello " ++ name;
 		return msg;
 	}
 
-	proc logGreeting(name: text): Unit requires (Logging) {
+	proc logGreeting(name: Text): Unit requires (Logging) {
 		await capabilities.Logging.log(greeting(name));
 	}
 |]
@@ -130,7 +130,7 @@ This DSL describes an imperative core that elaborates to Haskell declarations an
 
 ```haskell
 [impModule|
-	fn makeUser(uid: UserId, name: text): User {
+	fn makeUser(uid: UserId, name: Text): User {
 		return new User(uid, name, null);
 	}
 |]

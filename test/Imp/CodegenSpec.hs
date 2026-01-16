@@ -17,7 +17,7 @@ addOverride = (-)
 
 moduleSummary :: String
 moduleSummary = $(do
-  let src = "type Counter { value: int; }\ncapability Logging { log(msg: text): Unit; }\nfn add(x: int, y: int): int { return x + y; }"
+  let src = "type Counter { value: int; }\ncapability Logging { log(msg: Text): Unit; }\nfn add(x: int, y: int): int { return x + y; }"
   case parseModule "<test>" src of
     Left err -> fail (show err)
     Right mod' -> do

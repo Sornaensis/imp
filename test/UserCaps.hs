@@ -57,7 +57,7 @@ import qualified UserModel
     await capabilities.AuditLog.appendEvent(new AuditEvent("create_user", hs{ Just uid }, now, "created"));
   }
 
-  proc updateProfile(uid: UserId, name: text): Unit requires (UserStore, AuditLog) {
+  proc updateProfile(uid: UserId, name: Text): Unit requires (UserStore, AuditLog) {
     var existing = await capabilities.UserStore.getUser(uid);
     if (hs{ isJust existing }) {
       var user = hs{ fromJust existing };

@@ -21,15 +21,15 @@ import Imp.DSL
   // Define a simple User type
   type User deriving (Show, Eq) {
     id: int;
-    name: text;
+    name: Text;
     age: int;
     active: bool;
   }
   
   // Define a capability for logging
   capability Logging requires (MonadIO) {
-    info(msg: text): Void;
-    warn(msg: text): Void;
+    info(msg: Text): Void;
+    warn(msg: Text): Void;
   }
   
   // Define a capability for database operations
