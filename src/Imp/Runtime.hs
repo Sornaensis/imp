@@ -2,6 +2,8 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE TypeSynonymInstances #-}
 {-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FunctionalDependencies #-}
 
 -- | Runtime support for the imperative DSL
 -- Provides ref abstractions, lens composition, and capability helpers
@@ -19,6 +21,8 @@ module Imp.Runtime
   , ix
   , impAdd
   , ImpAdd(..)
+  , impIndex
+  , ImpIndex(..)
   
     -- * Capability helpers
   , requireCap
@@ -26,8 +30,11 @@ module Imp.Runtime
   ) where
 
 import Control.Lens (Lens', lens, set, view, ix, use, (.=), (%=))
-import Data.Text (Text)
 import Control.Monad.State.Class (MonadState)
+import Data.Maybe (listToMaybe)
+import Data.Text (Text)
+import Data.Map.Strict (Map)
+import qualified Data.Map.Strict as Map
 
 -- * Ref abstraction
 
@@ -83,3 +90,18 @@ instance ImpAdd Text where
 
 instance ImpAdd String where
   impAdd' = (<>)
+
+-- * Indexing helpers
+
+class ImpIndex c i a | c i -> a where
+  impIndex :: c -> i -> Maybe a
+
+instance Integral i => ImpIndex [a] i a where
+  impIndex xs i =
+    let n = fromIntegral i :: Int
+    in if n < 0
+         then Nothing
+         else listToMaybe (drop n xs)
+
+instance Ord k => ImpIndex (Map k v) k v where
+  impIndex = flip Map.lookup

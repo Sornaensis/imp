@@ -33,7 +33,7 @@ import qualified Language.Haskell.Meta.Parse as Meta
 import Text.Megaparsec.Pos (sourceColumn, sourceLine, unPos)
 
 import Imp.AST
-import Imp.Runtime (Ref(..), setRef, modRef, (.^), impAdd)
+import Imp.Runtime (Ref(..), setRef, modRef, (.^), impAdd, impIndex)
 
 -- * Module compilation (impModule quasiquoter)
 
@@ -561,7 +561,7 @@ compileExprWith opEnv expr = case expr of
   EIndex obj idx -> do
     o <- compileExprWith opEnv (lVal obj)
     i <- compileExprWith opEnv (lVal idx)
-    pure (InfixE (Just o) (VarE '(!!)) (Just (AppE (VarE 'fromIntegral) i)))
+    pure (AppE (AppE (VarE 'impIndex) o) i)
 
   ENew ty args -> do
     conName <- resolveConstructorName ty
