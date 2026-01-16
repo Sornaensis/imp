@@ -167,3 +167,26 @@ Example:
 	await capabilities.Logging.log(msg);
 |]
 ```
+
+### Capability wiring (DSL → Haskell)
+
+```haskell
+[impModule|
+  capability Logging {
+    log(msg: Text): Unit;
+  }
+|]
+
+-- Canonical generated Haskell:
+class HasLogging m where
+	cap_logging_log :: Text -> m ()
+
+requireLogging :: (Applicative m, HasLogging m) => m ()
+requireLogging = pure ()
+
+-- Wiring up capabilities to your haskell code
+newtype AppM a = AppM { runAppM :: IO a }
+
+instance HasLogging AppM where
+  cap_logging_log msg = AppM (putStrLn (T.unpack msg))
+```
