@@ -14,6 +14,7 @@ module Imp.Runtime
   , modRef
   , Lens'
   , lens
+  , set
   , view
   , ix
   , impAdd
@@ -24,7 +25,7 @@ module Imp.Runtime
   , taggedLiteral
   ) where
 
-import Control.Lens (Lens', lens, view, ix, use, (.=), (%=))
+import Control.Lens (Lens', lens, set, view, ix, use, (.=), (%=))
 import Data.Text (Text)
 import Control.Monad.State.Class (MonadState)
 

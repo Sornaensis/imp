@@ -10,7 +10,7 @@ module Imp.Codegen
   ) where
 
 import Control.Monad (forM, when)
-import Control.Lens (Lens', lens, view, ix)
+import Control.Lens (Lens', lens, set, view, ix)
 import Data.Functor.Identity (runIdentity)
 import Data.Bits ((.&.), (.|.), xor, shiftL, shiftR, complement)
 import Data.ByteString (ByteString)
@@ -534,6 +534,14 @@ compileExprWith opEnv expr = case expr of
     o <- compileExprWith opEnv (lVal obj)
     fieldName <- resolveValueName [field]
     pure (AppE (AppE (VarE 'view) (VarE fieldName)) o)
+
+  ERecordUpdate obj updates -> do
+    base <- compileExprWith opEnv (lVal obj)
+    compiled <- mapM (compileRecordUpdateField opEnv) updates
+    pure (foldl' applyUpdate base compiled)
+    where
+      applyUpdate acc (fieldName, valueExp) =
+        AppE (AppE (AppE (VarE 'set) (VarE fieldName)) valueExp) acc
   
   EBinOp op left right -> do
     l <- compileExprWith opEnv (lVal left)
@@ -563,6 +571,12 @@ compileExprWith opEnv expr = case expr of
   EHs code -> parseHaskellExp (T.unpack code)
 
   EHsM code -> parseHaskellExp (T.unpack code)
+
+compileRecordUpdateField :: OpEnv -> (Text, L Expr) -> Q (Name, Exp)
+compileRecordUpdateField opEnv (field, expr) = do
+  fieldName <- resolveValueName [field]
+  valueExp <- compileExprWith opEnv (lVal expr)
+  pure (fieldName, valueExp)
 
 -- | Compile a literal
 compileLit :: Lit -> Q Exp

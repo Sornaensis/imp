@@ -99,3 +99,8 @@ spec = describe "Imp.Parser" $ do
     parseModule "<test>" src `shouldSatisfy` \case
       Right (Module items) -> length items == 7
       _ -> False
+
+  it "parses record update expressions" $ do
+    parseExpr "<test>" "user { age: 1, name: \"x\" }" `shouldSatisfy` \case
+      Right (L _ (ERecordUpdate _ updates)) -> length updates == 2
+      _ -> False

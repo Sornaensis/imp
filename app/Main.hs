@@ -80,10 +80,9 @@ updateUserAge uid newAge = [imp|
   var user = await capabilities.database.getUser(uid);
   
   capabilities.logging.info("Updating age");
-  // Note: This is a placeholder - full implementation would handle field updates
-  
-  capabilities.logging.warn("Save operation placeholder");
-  await capabilities.database.saveUser(user);
+  var updated = user { age: newAge };
+  await capabilities.database.saveUser(updated);
+  capabilities.logging.info("User saved");
 |]
 
 -- Main function demonstrating the DSL

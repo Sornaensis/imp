@@ -65,6 +65,7 @@ data Expr
   | ELit Lit                        -- literal value
   | ECall (L Expr) [L Expr]         -- function/method call
   | EMember (L Expr) Text           -- member access: x.field
+  | ERecordUpdate (L Expr) [(Text, L Expr)] -- record update: x { field: expr }
   | EIndex (L Expr) (L Expr)        -- index access: x[i]
   | EBinOp BinOp (L Expr) (L Expr)  -- binary operation
   | EUnOp UnOp (L Expr)             -- unary operation

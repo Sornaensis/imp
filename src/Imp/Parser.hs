@@ -374,6 +374,11 @@ pPostfix e = go e
           let newExpr = L (Span (spanStart (lSpan expr)) end) (EMember expr field)
           go newExpr
       , do
+          updates <- braces (pRecordUpdateField `sepBy1` comma)
+          end <- getSourcePos
+          let newExpr = L (Span (spanStart (lSpan expr)) end) (ERecordUpdate expr updates)
+          go newExpr
+      , do
           idx <- brackets (withSpan pOrExpr)
           end <- getSourcePos
           let newExpr = L (Span (spanStart (lSpan expr)) end) (EIndex expr idx)
@@ -385,6 +390,13 @@ pPostfix e = go e
           go newExpr
       , pure expr
       ]
+
+pRecordUpdateField :: Parser (Text, L Expr)
+pRecordUpdateField = do
+  name <- ident
+  void (symbol ":")
+  expr <- withSpan pOrExpr
+  pure (name, expr)
 
 -- | Parse a literal
 pLit :: Parser Lit

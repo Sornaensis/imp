@@ -212,6 +212,10 @@ validateExpr typeEnv capEnv (L span' expr) = case expr of
     argDiags <- concat <$> mapM (validateExpr typeEnv capEnv) args
     pure (fDiags <> argDiags)
   EMember obj _ -> validateExpr typeEnv capEnv obj
+  ERecordUpdate obj updates -> do
+    objDiags <- validateExpr typeEnv capEnv obj
+    updateDiags <- concat <$> mapM (validateExpr typeEnv capEnv . snd) updates
+    pure (objDiags <> updateDiags)
   EIndex obj idx -> (++) <$> validateExpr typeEnv capEnv obj <*> validateExpr typeEnv capEnv idx
   EBinOp _ l r -> (++) <$> validateExpr typeEnv capEnv l <*> validateExpr typeEnv capEnv r
   EUnOp _ a -> validateExpr typeEnv capEnv a
